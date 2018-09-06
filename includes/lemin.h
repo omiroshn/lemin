@@ -18,6 +18,7 @@
 
 typedef struct		s_lemin
 {
+	char	*out;
 	int		count_ants;
 	int		count_start;
 	int		flag_start;
