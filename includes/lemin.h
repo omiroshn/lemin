@@ -10,11 +10,26 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_LS_H
-# define FT_LS_H
+#ifndef LEMIN_H
+# define LEMIN_H
 
 # include "libft.h"
 # include "colored_str.h"
+
+typedef struct		s_node
+{
+	char			*name;
+	int				coord_x;
+	int				coord_y;
+	struct s_node	*next;
+}					t_node;
+
+typedef struct		s_queue
+{
+	int		length;
+	t_node	*head;
+	t_node	*tail;
+}					t_queue;
 
 typedef struct		s_lemin
 {
@@ -25,5 +40,10 @@ typedef struct		s_lemin
 	int		count_end;
 	int		flag_end;
 }					t_lemin;
+
+void	join_str(char *line, t_lemin *lemin);
+void	check_comments(char *line, t_lemin *lemin);
+void	read_amount_of_ants(t_lemin *lemin);
+void	print_error(char *number);
 
 #endif

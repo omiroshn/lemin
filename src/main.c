@@ -19,78 +19,80 @@ void	print_error(char *number)
 	exit(-1);
 }
 
-void	check_commands(char *line, t_lemin *lemin)
+void	lemin_init(t_lemin *lemin)
 {
-	if (ft_strcmp(line, "##start") == 0)
-	{
-		lemin->count_start++;
-		lemin->flag_start = 1;
-	}
-	else if (ft_strcmp(line, "##end") == 0)
-	{
-		lemin->count_end++;
-		lemin->flag_end = 1;
-	}
-	else if (line[0] != '#')
-		print_error("");
-	if (lemin->count_start > 1 || lemin->count_end > 1)
-		print_error("");
-	//join_str(lemin, line);
+	lemin->out = NULL;
+	lemin->count_ants = 0;
+	lemin->count_start = 0;
+	lemin->count_end = 0;
+	lemin->flag_start = 0;
+	lemin->flag_end = 0;
 }
 
-int		check_comments(char *line, t_lemin *lemin)
-{
-	int i;
-	int count;
+// void	read_connections(t_lemin *lemin, char *first_line)
+// {
+// 	char *line;
 
-	i = -1;
-	count = 0;
-	while (line[++i])
-		if (line[i] == '#')
-			count++;
-	if (ft_strstr(line, "##start") && count == 2 && ft_strlen(line) == 7)
-		print_error("Number of ants was not defined.");
-	if (ft_strstr(line, "##end") && count == 2 && ft_strlen(line) == 5)
-		print_error("Number of ants was not defined.");
-	lemin->out = ft_strjoin(lemin->out, line);
-	lemin->out = ft_strjoin(lemin->out, "\n");
-	return (count);
+// 	while (get_next_line(0, &line))
+// 	{
+// 		//check_comments(line, lemin);
+// 		ft_strdel(&line);
+// 	}
+// }
+
+void	split_rooms(t_lemin *lemin, char *line)
+{
+	char	**split;
+	int		i;
+	int		j;
+
+	if (ft_isspace(line[0]))
+		print_error("Wrong symbol.");
+	ft_countwords(line, ' ') < 3 ? print_error("Not enough coordinates.") : 0;
+	ft_countwords(line, ' ') > 3 ? print_error("Too many coordinates.") : 0;
+	split = ft_strsplit(line, ' ');
+	split[0][0] == 'L' ? print_error("Wrong name.") : 0;
+	i = 0;
+	while (split[++i] && (j = -1))
+		if (!ft_isdigit(split[i][++j]))
+			print_error("Coordinate isn't a number");
 }
 
-void	read_amount_of_ants(t_lemin *lemin)
+void	read_rooms(t_lemin *lemin)
 {
 	char *line;
-	int i;
 
-	while (get_next_line(0, &line) && line[0] == '#')
+	while (get_next_line(0, &line) && ft_strchr(line, '-') == 0)
 	{
-		ft_printf(":%s\n", line);
-		check_comments(line, lemin);
-		// check_commands(line, lemin);
+		if (!line || line[0] == '\0')
+			print_error("Empty line.");
+		if (ft_strchr(line, '#'))
+			check_comments(line, lemin);
+		else
+		{
+			split_rooms(lemin, line);
+			join_str(line, lemin);
+		}
+		ft_strdel(&line);
 	}
-	if (!*line)
-		print_error("Empty line.");
-	ft_printf(";%s\n", line);
-	i = -1;
-	while (line[++i])
-	{
-		if (ft_isspace(line[i]))
-			print_error("Wrong symbol.");
-		else if (!ft_isdigit(line[i]))
-			print_error("Wrong symbol.");
-	}
-	lemin->count_ants = ft_atoi(line);
-	if (lemin->count_ants <= 0)
-		print_error("Number of ants <= 0 or > than MAXINT");
-	ft_printf("ants: %d\n", lemin->count_ants);
-	ft_printf("\n\n%s\n", lemin->out);
+	if (lemin->count_start != 1 || lemin->count_end != 1)
+		print_error("No ##start or ##end found.");
+	//read_connections(lemin, line);
+	ft_strdel(&line);
 }
 
 int		main(int argc, char **argv)
 {
 	t_lemin *lemin;
+	t_queue *queue;
 
-	lemin = (t_lemin*)malloc(sizeof(t_lemin));
+	lemin = (t_lemin*)ft_memalloc(sizeof(t_lemin));
+	queue = (t_queue*)ft_memalloc(sizeof(t_queue));
+	lemin_init(lemin);
 	read_amount_of_ants(lemin);
+	read_rooms(lemin);
+	ft_printf("%s\n", lemin->out);
+	ft_strdel(&lemin->out);
+	//system("leaks lem-in");
 	return (0);
 }

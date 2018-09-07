@@ -95,5 +95,6 @@ int				get_rgb_smooth(double t, int k);
 void			ft_sort_argv(int argc, char **argv);
 int				ft_printf(const char *msg, ...);
 void			print_bits(uint64_t octet);
+size_t			ft_countwords(char *str, char sep);
 
 #endif

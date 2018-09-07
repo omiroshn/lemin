@@ -12,7 +12,7 @@
 
 NAME = lem-in
 CC = clang
-FILES = main
+FILES = main read_ants read_rooms
 LIBFT_DIR = libft/
 SRC = $(addprefix src/, $(addsuffix .c, $(FILES)))
 OBJ = $(addprefix obj/, $(addsuffix .o, $(FILES)))
