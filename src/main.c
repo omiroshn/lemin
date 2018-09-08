@@ -15,7 +15,7 @@
 void	print_error(char *number)
 {
 	ft_printf("ERROR: %s\n", number);
-	//system("leaks lemin");
+	// system("leaks lem-in");
 	exit(-1);
 }
 
@@ -29,70 +29,48 @@ void	lemin_init(t_lemin *lemin)
 	lemin->flag_end = 0;
 }
 
-// void	read_connections(t_lemin *lemin, char *first_line)
-// {
-// 	char *line;
-
-// 	while (get_next_line(0, &line))
-// 	{
-// 		//check_comments(line, lemin);
-// 		ft_strdel(&line);
-// 	}
-// }
-
-void	split_rooms(t_lemin *lemin, char *line)
+void	print_queue(t_queue *queue)
 {
-	char	**split;
-	int		i;
-	int		j;
+	t_node *node;
 
-	if (ft_isspace(line[0]))
-		print_error("Wrong symbol.");
-	ft_countwords(line, ' ') < 3 ? print_error("Not enough coordinates.") : 0;
-	ft_countwords(line, ' ') > 3 ? print_error("Too many coordinates.") : 0;
-	split = ft_strsplit(line, ' ');
-	split[0][0] == 'L' ? print_error("Wrong name.") : 0;
-	i = 0;
-	while (split[++i] && (j = -1))
-		if (!ft_isdigit(split[i][++j]))
-			print_error("Coordinate isn't a number");
-}
-
-void	read_rooms(t_lemin *lemin)
-{
-	char *line;
-
-	while (get_next_line(0, &line) && ft_strchr(line, '-') == 0)
+	node = queue->head;
+	while (node != NULL)
 	{
-		if (!line || line[0] == '\0')
-			print_error("Empty line.");
-		if (ft_strchr(line, '#'))
-			check_comments(line, lemin);
-		else
-		{
-			split_rooms(lemin, line);
-			join_str(line, lemin);
-		}
-		ft_strdel(&line);
+		ft_printf("%s %d %d %d\n", node->name, node->coord_x, node->coord_y, node->index);
+		node = node->next;
 	}
-	if (lemin->count_start != 1 || lemin->count_end != 1)
-		print_error("No ##start or ##end found.");
-	//read_connections(lemin, line);
-	ft_strdel(&line);
 }
 
-int		main(int argc, char **argv)
+void	print_matrix(int **matrix, int length)
 {
-	t_lemin *lemin;
-	t_queue *queue;
+	int i;
+	int j;
+
+	i = -1;
+	while (++i < length && (j = -1))
+	{
+		while (++j < length)
+			ft_printf("%d", matrix[i][j]);
+		ft_printf("\n");
+	}
+}
+
+int		main(void)
+{
+	t_lemin	*lemin;
+	t_queue	*queue;
+	char	*line;
 
 	lemin = (t_lemin*)ft_memalloc(sizeof(t_lemin));
 	queue = (t_queue*)ft_memalloc(sizeof(t_queue));
 	lemin_init(lemin);
 	read_amount_of_ants(lemin);
-	read_rooms(lemin);
+	line = read_rooms(lemin, queue);
+	create_adjacent_matrix(lemin, queue, line);
 	ft_printf("%s\n", lemin->out);
+	// print_matrix(lemin->matrix, queue->length);
+	// print_queue(queue);
 	ft_strdel(&lemin->out);
-	//system("leaks lem-in");
+	// system("leaks lem-in");
 	return (0);
 }

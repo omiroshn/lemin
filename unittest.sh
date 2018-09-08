@@ -9,6 +9,8 @@ maps=(
 		maps/less_coords \
 		maps/much_coords \
 		maps/bigL \
+		maps/repeating_name \
+		maps/repeating_coords \
 	)
 
 if echo "$*" | grep -e '-s' > /dev/null

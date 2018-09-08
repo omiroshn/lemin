@@ -2,6 +2,7 @@
 ##start
 start 1 1
 room1 5 1
+room66 1 1
 room2 8 9
 room3 7 8
 room4 7 6
@@ -22,8 +23,3 @@ room6-room7
 room7-room8
 room8-room9
 room9-end
-
-
-#start-start doesnt work
-#empty line at the end of the program
-#and i think the other errors

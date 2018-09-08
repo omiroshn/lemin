@@ -12,16 +12,18 @@
 
 #include "lemin.h"
 
-void	join_str(char *line, t_lemin *lemin)
+char	*join_str(char *where, char *what)
 {
-	char *temp;
+	char	*temp;
+	char	*ret;
 
-	temp = lemin->out;
-	lemin->out = ft_strjoin(temp, line);
+	temp = where;
+	ret = ft_strjoin(temp, what);
 	ft_strdel(&temp);
-	temp = lemin->out;
-	lemin->out = ft_strjoin(temp, "\n");
+	temp = ret;
+	ret = ft_strjoin(temp, "\n");
 	ft_strdel(&temp);
+	return (ret);
 }
 
 void	check_comments(char *line, t_lemin *lemin)
@@ -38,7 +40,7 @@ void	check_comments(char *line, t_lemin *lemin)
 	}
 	if (lemin->count_start > 1 || lemin->count_end > 1)
 		print_error("Several starts or ends.");
-	join_str(line, lemin);
+	lemin->out = join_str(lemin->out, line);
 }
 
 void	read_amount_of_ants(t_lemin *lemin)
@@ -61,6 +63,6 @@ void	read_amount_of_ants(t_lemin *lemin)
 			print_error("Wrong symbol.");
 	if ((lemin->count_ants = ft_atoi(line)) <= 0)
 		print_error("Number of ants <= 0 or > than MAXINT.");
-	join_str(line, lemin);
+	lemin->out = join_str(lemin->out, line);
 	ft_strdel(&line);
 }
