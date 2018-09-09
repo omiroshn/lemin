@@ -16,6 +16,8 @@
 # include "libft.h"
 # include "colored_str.h"
 
+# define INFINITY 2147483647
+
 typedef struct		s_node
 {
 	char			*name;
@@ -37,6 +39,9 @@ typedef struct		s_queue
 typedef struct		s_lemin
 {
 	int		**matrix;
+	int		*distance;
+	int		*visited;
+	int		*path;
 	char	*out;
 	int		count_ants;
 	int		count_start;
@@ -61,5 +66,7 @@ void	check_existance_of_link(t_queue *queue, char **split);
 int		find_index(t_queue *queue, char *name);
 void	fill_matrix(t_lemin *lemin, t_queue *queue, char **split);
 void	split_links(t_lemin *lemin, t_queue *queue, char *line);
+void	find_shortest_path(t_lemin *lemin, t_queue *queue);
+void	print_matrix(int **matrix, int length);
 
 #endif

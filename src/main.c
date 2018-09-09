@@ -67,7 +67,8 @@ int		main(void)
 	read_amount_of_ants(lemin);
 	line = read_rooms(lemin, queue);
 	create_adjacent_matrix(lemin, queue, line);
-	ft_printf("%s\n", lemin->out);
+	find_shortest_path(lemin, queue);
+	// ft_printf("%s\n", lemin->out);
 	// print_matrix(lemin->matrix, queue->length);
 	// print_queue(queue);
 	ft_strdel(&lemin->out);

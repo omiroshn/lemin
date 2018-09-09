@@ -20,15 +20,6 @@ void	create_empty_matrix(t_lemin *lemin, int length)
 	i = -1;
 	while (++i < length)
 		lemin->matrix[i] = (int*)ft_memalloc(sizeof(int) * length);
-
-	// int j;
-	// i = -1;
-	// while (++i < length && (j = -1))
-	// {
-	// 	while (++j < length)
-	// 		ft_printf("%d", lemin->matrix[i][j]);
-	// 	ft_printf("\n");
-	// }
 }
 
 void	set_indexes(t_queue *queue)

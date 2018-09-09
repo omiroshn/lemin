@@ -45,8 +45,8 @@ void	check_comments(char *line, t_lemin *lemin)
 
 void	read_amount_of_ants(t_lemin *lemin)
 {
-	char *line;
-	int i;
+	char	*line;
+	int		i;
 
 	while (get_next_line(0, &line) && line[0] == '#')
 	{
