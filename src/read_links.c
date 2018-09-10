@@ -31,6 +31,8 @@ void	check_existance_of_link(t_queue *queue, char **split)
 			l_exists = 1;
 		if (ft_strcmp(node->name, right) == 0)
 			r_exists = 1;
+		if (l_exists && r_exists)
+			return ;
 		node = node->next;
 	}
 	!l_exists ? print_error("Left name doesn't exit.") : 0;
@@ -68,13 +70,15 @@ void	split_links(t_lemin *lemin, t_queue *queue, char *line)
 {
 	char	**split;
 	int		i;
+	int		words;
 
 	i = -1;
 	while (line[++i])
 		if (ft_isspace(line[i]))
 			print_error("Wrong symbol.");
-	ft_countwords(line, '-') < 2 ? print_error("Not enough arguments.") : 0;
-	ft_countwords(line, '-') > 2 ? print_error("Too many arguments.") : 0;
+	words = ft_countwords(line, '-');
+	words < 2 ? print_error("Not enough arguments.") : 0;
+	words > 2 ? print_error("Too many arguments.") : 0;
 	split = ft_strsplit(line, '-');
 	check_existance_of_link(queue, split);
 	fill_matrix(lemin, queue, split);

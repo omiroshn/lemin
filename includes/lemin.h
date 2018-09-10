@@ -48,6 +48,8 @@ typedef struct		s_lemin
 	int		flag_start;
 	int		count_end;
 	int		flag_end;
+	int		path_len;
+	char	**final;
 }					t_lemin;
 
 char	*join_str(char *where, char *what);
@@ -68,5 +70,6 @@ void	fill_matrix(t_lemin *lemin, t_queue *queue, char **split);
 void	split_links(t_lemin *lemin, t_queue *queue, char *line);
 void	find_shortest_path(t_lemin *lemin, t_queue *queue);
 void	print_matrix(int **matrix, int length);
+void	print_pathes(t_lemin *lemin, t_queue *queue);
 
 #endif

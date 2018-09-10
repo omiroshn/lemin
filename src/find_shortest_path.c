@@ -54,17 +54,31 @@ static int	find_end_index(t_queue *queue)
 	return (-1);
 }
 
-static void	calculate_shortest_path(t_lemin *lemin, int length, int endindex)
+static char	*find_index_name(t_queue *queue, int index)
+{
+	t_node *node;
+
+	node = queue->head;
+	while (node != NULL)
+	{
+		if (node->index == index)
+			return (node->name);
+		node = node->next;
+	}
+	return (NULL);
+}
+
+static void	calculate_shortest_path(t_lemin *lemin, t_queue *queue, int endindex)
 {
 	int i;
-	int	k;
+	int j;
 	int	temp;
 	int	weight;
 
-	k = 1;
+	lemin->path_len = 1;
 	weight = lemin->distance[endindex];
 	while (endindex > 0 && (i = -1))
-		while (++i < length)
+		while (++i < queue->length)
 			if (lemin->matrix[endindex][i] != 0)
 			{
 				temp = weight - lemin->matrix[endindex][i];
@@ -72,17 +86,15 @@ static void	calculate_shortest_path(t_lemin *lemin, int length, int endindex)
 				{
 					weight = temp;
 					endindex = i;
-					lemin->path[k] = i;
-					k++;
+					lemin->path[lemin->path_len++] = i;
 				}
 			}
-	i = k - 1;
-	while (i >= 0)
-	{
-		ft_printf("%3d ", lemin->path[i]);
-		i--;
-	}
-	ft_printf("\n");
+	lemin->final = (char**)malloc(sizeof(char*) * (lemin->path_len + 1));
+	i = lemin->path_len;
+	j = 0;
+	while (--i >= 0)
+		lemin->final[j++] = ft_strdup(find_index_name(queue, lemin->path[i]));
+	lemin->final[j] = NULL;
 }
 
 void		find_shortest_path(t_lemin *lemin, t_queue *queue)
@@ -109,5 +121,5 @@ void		find_shortest_path(t_lemin *lemin, t_queue *queue)
 	if (lemin->distance[endindex] == INFINITY)
 		print_error("End point not found.");
 	lemin->path[0] = endindex;
-	calculate_shortest_path(lemin, queue->length, endindex);
+	calculate_shortest_path(lemin, queue, endindex);
 }

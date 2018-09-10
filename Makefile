@@ -12,7 +12,8 @@
 
 NAME = lem-in
 CC = clang
-FILES = main read_ants read_rooms adjacent_matrix read_links find_shortest_path
+FILES = main read_ants read_rooms adjacent_matrix read_links find_shortest_path \
+	print_pathes
 LIBFT_DIR = libft/
 SRC = $(addprefix src/, $(addsuffix .c, $(FILES)))
 OBJ = $(addprefix obj/, $(addsuffix .o, $(FILES)))

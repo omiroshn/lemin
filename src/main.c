@@ -27,6 +27,7 @@ void	lemin_init(t_lemin *lemin)
 	lemin->count_end = 0;
 	lemin->flag_start = 0;
 	lemin->flag_end = 0;
+	lemin->path_len = 0;
 }
 
 void	print_queue(t_queue *queue)
@@ -68,7 +69,8 @@ int		main(void)
 	line = read_rooms(lemin, queue);
 	create_adjacent_matrix(lemin, queue, line);
 	find_shortest_path(lemin, queue);
-	// ft_printf("%s\n", lemin->out);
+	ft_printf("%s\n", lemin->out);
+	print_pathes(lemin, queue);
 	// print_matrix(lemin->matrix, queue->length);
 	// print_queue(queue);
 	ft_strdel(&lemin->out);

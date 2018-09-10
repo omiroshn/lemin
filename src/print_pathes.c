@@ -1,36 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   print_pathes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: omiroshn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/01 18:28:35 by omiroshn          #+#    #+#             */
-/*   Updated: 2017/11/01 18:28:39 by omiroshn         ###   ########.fr       */
+/*   Created: 2018/09/07 17:40:40 by omiroshn          #+#    #+#             */
+/*   Updated: 2018/09/07 17:40:41 by omiroshn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "lemin.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+void	print_pathes(t_lemin *lemin, t_queue *queue)
 {
-	char		*str;
-	size_t		i;
-	size_t		j;
+	int i;
 
-	if (!s1)
-		return (ft_strdup(s2));
-	if (!s2)
-		return (ft_strdup(s1));
-	str = ft_memalloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (!str)
-		return (NULL);
 	i = -1;
-	while (s1[++i])
-		str[i] = s1[i];
-	j = -1;
-	while (s2[++j])
-		str[i++] = s2[j];
-	str[i] = '\0';
-	return (str);
+	while (++i < lemin->path_len)
+	{
+		ft_printf("%s\n", lemin->final[i]);
+	}
+
 }
