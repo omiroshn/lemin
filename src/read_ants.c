@@ -48,7 +48,7 @@ void	read_amount_of_ants(t_lemin *lemin)
 	char	*line;
 	int		i;
 
-	while (get_next_line(0, &line) && line[0] == '#')
+	while (get_next_line(0, &line) > 0 && line[0] == '#')
 	{
 		if ((ft_strstr(line, "##start") && ft_strlen(line) == 7)
 			|| (ft_strstr(line, "##end") && ft_strlen(line) == 5))

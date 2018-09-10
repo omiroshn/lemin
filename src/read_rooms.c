@@ -102,7 +102,7 @@ char			*read_rooms(t_lemin *lemin, t_queue *queue)
 {
 	char *line;
 
-	while (get_next_line(0, &line) && ft_strchr(line, '-') == 0)
+	while (get_next_line(0, &line) > 0 && ft_strchr(line, '-') == 0)
 	{
 		if (!line || line[0] == '\0')
 			print_error("Empty line.");

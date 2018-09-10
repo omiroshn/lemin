@@ -69,7 +69,7 @@ void			create_adjacent_matrix(t_lemin *lemin,
 
 	if (read_first_line(lemin, queue, first) == -1)
 		return ;
-	while (get_next_line(0, &line))
+	while (get_next_line(0, &line) > 0)
 	{
 		if (!line || line[0] == '\0')
 		{
