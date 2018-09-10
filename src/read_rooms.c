@@ -12,7 +12,7 @@
 
 #include "lemin.h"
 
-t_node	*new_node(t_lemin *lemin, char **split)
+static	t_node	*new_node(t_lemin *lemin, char **split)
 {
 	t_node	*node;
 
@@ -35,12 +35,10 @@ t_node	*new_node(t_lemin *lemin, char **split)
 	}
 	else
 		node->end = 0;
-	// if (node->end == 1 && node->start == 1)
-	// 	ft_error(lemin);
 	return (node);
 }
 
-void	enqueue(t_lemin *lemin, t_queue *queue, char **split)
+static	void	enqueue(t_lemin *lemin, t_queue *queue, char **split)
 {
 	if (queue->tail == NULL)
 	{
@@ -55,7 +53,7 @@ void	enqueue(t_lemin *lemin, t_queue *queue, char **split)
 	queue->length++;
 }
 
-void	check_repeating_names_and_coords(t_queue *queue)
+static	void	check_repeating_names_and_coords(t_queue *queue)
 {
 	t_node *step;
 	t_node *next_step;
@@ -77,7 +75,7 @@ void	check_repeating_names_and_coords(t_queue *queue)
 	}
 }
 
-void	split_rooms(t_lemin *lemin, t_queue *queue, char *line)
+static	void	split_rooms(t_lemin *lemin, t_queue *queue, char *line)
 {
 	char	**split;
 	int		i;
@@ -100,7 +98,7 @@ void	split_rooms(t_lemin *lemin, t_queue *queue, char *line)
 	free(split);
 }
 
-char	*read_rooms(t_lemin *lemin, t_queue *queue)
+char			*read_rooms(t_lemin *lemin, t_queue *queue)
 {
 	char *line;
 

@@ -12,7 +12,7 @@
 
 #include "lemin.h"
 
-void	create_empty_matrix(t_lemin *lemin, int length)
+static	void	create_empty_matrix(t_lemin *lemin, int length)
 {
 	int i;
 
@@ -22,7 +22,7 @@ void	create_empty_matrix(t_lemin *lemin, int length)
 		lemin->matrix[i] = (int*)ft_memalloc(sizeof(int) * length);
 }
 
-void	set_indexes(t_queue *queue)
+static	void	set_indexes(t_queue *queue)
 {
 	int		i;
 	t_node	*node;
@@ -39,26 +39,55 @@ void	set_indexes(t_queue *queue)
 	}
 }
 
-void	create_adjacent_matrix(t_lemin *lemin, t_queue *queue, char *first)
+static	int		read_first_line(t_lemin *lemin, t_queue *queue, char *first)
 {
-	char *line;
-
 	set_indexes(queue);
 	create_empty_matrix(lemin, queue->length);
 	if (!first || first[0] == '\0')
-		print_error("Empty line.");
+	{
+		ft_strdel(&first);
+		return (-1);
+	}
 	if (ft_strchr(first, '#'))
+	{
 		check_comments(first, lemin);
-	else
-		split_links(lemin, queue, first);
+		ft_strdel(&first);
+	}
+	else if (split_links(lemin, queue, first) == -1)
+	{
+		ft_strdel(&first);
+		return (-1);
+	}
+	return (1);
+}
+
+void			create_adjacent_matrix(t_lemin *lemin,
+										t_queue *queue,
+											char *first)
+{
+	char *line;
+
+	if (read_first_line(lemin, queue, first) == -1)
+		return ;
 	while (get_next_line(0, &line))
 	{
 		if (!line || line[0] == '\0')
-			print_error("Empty line.");
+		{
+			ft_strdel(&line);
+			return ;
+		}
 		if (ft_strchr(line, '#'))
+		{
 			check_comments(line, lemin);
+			ft_strdel(&line);
+		}
+		else if (split_links(lemin, queue, line) == -1)
+		{
+			ft_strdel(&line);
+			return ;
+		}
 		else
-			split_links(lemin, queue, line);
+			ft_strdel(&line);
 	}
 	ft_strdel(&line);
 }

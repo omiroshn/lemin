@@ -68,7 +68,9 @@ static char	*find_index_name(t_queue *queue, int index)
 	return (NULL);
 }
 
-static void	calculate_shortest_path(t_lemin *lemin, t_queue *queue, int endindex)
+static void	calculate_shortest_path(t_lemin *lemin,
+										t_queue *queue,
+											int endindex)
 {
 	int i;
 	int j;

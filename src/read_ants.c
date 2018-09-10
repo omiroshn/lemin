@@ -53,6 +53,7 @@ void	read_amount_of_ants(t_lemin *lemin)
 		if ((ft_strstr(line, "##start") && ft_strlen(line) == 7)
 			|| (ft_strstr(line, "##end") && ft_strlen(line) == 5))
 			print_error("Number of ants was not defined.");
+		check_comments(line, lemin);
 		ft_strdel(&line);
 	}
 	if (!line || line[0] == '\0')
