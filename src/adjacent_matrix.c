@@ -58,6 +58,8 @@ static	int		read_first_line(t_lemin *lemin, t_queue *queue, char *first)
 		ft_strdel(&first);
 		return (-1);
 	}
+	else
+		ft_strdel(&first);
 	return (1);
 }
 
