@@ -115,6 +115,8 @@ char			*read_rooms(t_lemin *lemin, t_queue *queue)
 		}
 		ft_strdel(&line);
 	}
+	lemin->flag_start == 1 ? print_error("Start room wasn't identified.") : 0;
+	lemin->flag_end == 1 ? print_error("End room wasn't identified.") : 0;
 	check_repeating_names_and_coords(queue);
 	if (lemin->count_start != 1 || lemin->count_end != 1)
 		print_error("No ##start or ##end found.");
